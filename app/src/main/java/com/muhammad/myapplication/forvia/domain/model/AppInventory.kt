@@ -22,3 +22,7 @@ data class AppInventory(
 //    val graphic :String?,
     val versionName : String,
 )
+
+
+
+

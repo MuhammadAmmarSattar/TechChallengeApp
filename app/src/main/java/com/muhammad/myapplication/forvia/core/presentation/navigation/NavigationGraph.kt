@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.muhammad.myapplication.forvia.domain.model.AppInventory
+import com.muhammad.myapplication.forvia.presentation.app_detail.InventoryDetailScreen
 import com.muhammad.myapplication.forvia.presentation.app_list.AppInventoryScreen
 import com.muhammad.myapplication.forvia.presentation.app_list.viewmodel.AppInventoryViewModel
 import kotlin.reflect.typeOf
@@ -25,17 +27,32 @@ fun MyNavigationHost(
         NavHost(navController = navController, startDestination = Home) {
             composable<Home> {
                 val viewModel = hiltViewModel<AppInventoryViewModel>()
-             val state  =   viewModel.state.collectAsStateWithLifecycle().value
+                val state = viewModel.state.collectAsStateWithLifecycle().value
 
                 AppInventoryScreen(
                     state = state,
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this
                 ) {
+                    navController.navigate(Detail(it))
                 }
             }
 
+            composable<Detail>(
+                typeMap = mapOf(
+                    typeOf<AppInventory>() to CustomNavType.AppType,
+                )
+            ) {
+                val arguments = it.toRoute<Detail>()
+//                val detail =  Detail = it.toRoute()
+                InventoryDetailScreen(
+                    appInventory = arguments.appInventory,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedVisibilityScope = this,
+                ) {
+                    navController.navigateUp()
+                }
             }
-
         }
     }
+}

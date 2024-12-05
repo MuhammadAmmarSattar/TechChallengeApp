@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TechChallengeApp</string>
+    <string name="store">Store</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="rating">Rating</string>
+    <string name="app_inventory_info">App Inventory Info</string>
+    <string name="detail">Detail</string>
 </resources>

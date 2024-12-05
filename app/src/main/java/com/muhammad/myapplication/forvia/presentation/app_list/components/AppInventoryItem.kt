@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.muhammad.myapplication.forvia.core.extensions.toFormattedRating
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
 import com.muhammad.myapplication.forvia.presentation.custom_components.CustomText
 
@@ -105,7 +106,7 @@ fun AppInventoryItem(
                             )
                             CustomText(
                                 fontSize = 10,
-                                text = appInventory.rating.toString(), modifier = Modifier.padding(
+                                text = appInventory.rating.toFormattedRating(), modifier = Modifier.padding(
                                     start = 8.dp, top = 0.dp, end = 12.dp, bottom = 0.dp
                                 ), textStyle = MaterialTheme.typography.bodySmall
                             )
