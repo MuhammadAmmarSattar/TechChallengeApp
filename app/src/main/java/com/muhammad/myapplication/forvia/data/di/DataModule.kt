@@ -1,5 +1,7 @@
 package com.muhammad.myapplication.forvia.data.di
 
+import com.muhammad.myapplication.forvia.data.local.AppInventoryDao
+import com.muhammad.myapplication.forvia.data.local.AppInventoryDatabase
 import com.muhammad.myapplication.forvia.data.remote.AppInventoryRDS
 import com.muhammad.myapplication.forvia.data.remote.service.AppInventoryService
 import com.muhammad.myapplication.forvia.data.repository.AppInventoryRepositoryImpl
@@ -16,7 +18,6 @@ import javax.inject.Singleton
 @Module
 object DataModule {
 
-
     @Provides
     fun provideAppService(retrofit: Retrofit): AppInventoryService {
         return retrofit.create(AppInventoryService::class.java)
@@ -31,5 +32,9 @@ object DataModule {
     @Provides
     fun provideExploreRepository(appInventoryRDS: AppInventoryRDS ): AppInventoryRepository =
         AppInventoryRepositoryImpl(appInventoryRDS = appInventoryRDS )
+
+    @Provides
+    fun provideAppDao(appDatabase: AppInventoryDatabase): AppInventoryDao =
+        appDatabase.getAppInventoryDao()
 
 }
