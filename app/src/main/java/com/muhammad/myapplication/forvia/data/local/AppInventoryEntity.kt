@@ -30,9 +30,6 @@ data class AppInventoryEntity(
     @ColumnInfo(name = "store_name")
     val storeName: String,
 
-    @ColumnInfo(name = "graphic_url")
-    val graphic: String,
-
     @ColumnInfo(name = "version_name")
     val versionName: String,
 )

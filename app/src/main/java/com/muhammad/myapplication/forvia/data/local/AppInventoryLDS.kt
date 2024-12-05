@@ -12,5 +12,5 @@ import javax.inject.Inject
  * */
 class AppInventoryLDS @Inject constructor(private val appDao: AppInventoryDao) :
     BaseLDS<AppInventoryEntity>(appDao) {
-    suspend fun getAllApp(): List<AppInventoryEntity> = appDao.getAllApp()
+    suspend fun getAllInventoryApp(): List<AppInventoryEntity> = appDao.getAllApp()
 }

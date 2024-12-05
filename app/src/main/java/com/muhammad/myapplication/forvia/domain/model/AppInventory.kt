@@ -1,5 +1,6 @@
 package com.muhammad.myapplication.forvia.domain.model
 
+import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Serializable
 
 
@@ -11,6 +12,7 @@ import kotlinx.serialization.Serializable
  * i use Serializable for data transfer instead of old Parcelable
  */
 @Serializable
+@Immutable // for compose optimization the Composable is skippable.
 data class AppInventory(
     val id: String,
     val name: String,
@@ -19,7 +21,6 @@ data class AppInventory(
     val size : Long,
     val updated :String,
     val storeName : String,
-//    val graphic :String?,
     val versionName : String,
 )
 

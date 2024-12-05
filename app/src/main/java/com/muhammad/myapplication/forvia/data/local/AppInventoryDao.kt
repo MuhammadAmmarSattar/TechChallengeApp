@@ -8,6 +8,6 @@ import com.muhammad.myapplication.forvia.core.base.BaseDao
 interface AppInventoryDao : BaseDao<AppInventoryEntity> {
 
     @Query("SELECT * FROM app_inventory")
-    fun getAllApp(): List<AppInventoryEntity>
+    suspend fun getAllApp(): List<AppInventoryEntity>
 
 }

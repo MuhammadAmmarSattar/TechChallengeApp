@@ -16,7 +16,7 @@ data class AppInventoryDto(
     val updated :String,
     @SerializedName("store_name")
     val storeName : String,
-    val graphic :String?,
+//    val graphic :String?,
     @SerializedName("vername")
     val versionName : String,
 )

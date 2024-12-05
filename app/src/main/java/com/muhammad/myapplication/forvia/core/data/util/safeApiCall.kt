@@ -15,10 +15,10 @@ suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher = Dispatchers.IO, ap
 //                is IOException -> ResultWrapper.NetworkError
                 is HttpException -> {
                     val code = throwable.code()
-                    ResultWrapper.GenericError(code, throwable.message())
+                    ResultWrapper.GenericError( throwable.message())
                 }
                 else -> {
-                    ResultWrapper.GenericError(500, throwable.message ?: "Something went wrong")
+                    ResultWrapper.GenericError( throwable.message ?: "Something went wrong")
                 }
             }
         }

@@ -6,6 +6,7 @@ import com.muhammad.myapplication.forvia.domain.model.AppInventory
 @Immutable
 data class AppListState (
     val isLoading: Boolean = false,
+    val error: String? = null,
     val appInventory: List<AppInventory> = emptyList(),
 )
 

@@ -1,5 +1,6 @@
 package com.muhammad.myapplication.forvia.data.mapper
 
+import com.muhammad.myapplication.forvia.data.local.AppInventoryEntity
 import com.muhammad.myapplication.forvia.data.remote.response.AppInventoryDto
 import com.muhammad.myapplication.forvia.data.remote.response.AppInventoryResponseDto
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
@@ -21,7 +22,32 @@ fun AppInventoryDto.toDomainModel(): AppInventory {
         size = this.size,
         updated = this.updated,
         storeName = this.storeName,
-//        graphic = this.graphic ?: "",
+        versionName = this.versionName
+    )
+}
+
+fun AppInventoryEntity.toDomainInventory(): AppInventory {
+    return AppInventory(
+        id = this.id,
+        name = this.name,
+        imageUrl = this.imageUrl,
+        rating = this.rating,
+        size = this.size,
+        updated = this.updated,
+        storeName = this.storeName,
+        versionName = this.versionName
+    )
+}
+
+fun AppInventoryDto.toEntity(): AppInventoryEntity {
+    return AppInventoryEntity(
+        id = this.id,
+        name = this.name,
+        imageUrl = this.imageUrl,
+        rating = this.rating,
+        size = this.size,
+        updated = this.updated,
+        storeName = this.storeName,
         versionName = this.versionName
     )
 }
@@ -32,4 +58,8 @@ fun List<AppInventoryDto>.toDomainModelList(): List<AppInventory> {
 
 fun AppInventoryResponseDto.getAppInventoryList(): List<AppInventoryDto> {
     return this.responses.listApps.datasets.all.data.list
+}
+
+fun AppInventoryResponseDto.toEntityList(): List<AppInventoryEntity> {
+    return this.getAppInventoryList().map { it.toEntity() }
 }

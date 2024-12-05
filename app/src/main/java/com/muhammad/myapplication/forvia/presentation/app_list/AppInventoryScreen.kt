@@ -1,5 +1,6 @@
 package com.muhammad.myapplication.forvia.presentation.app_list
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -16,14 +17,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.muhammad.myapplication.R
+import com.muhammad.myapplication.forvia.core.presentation.utils.ObserveAsEvents
 import com.muhammad.myapplication.forvia.presentation.app_list.state.AppListState
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
 import com.muhammad.myapplication.forvia.presentation.app_list.components.AppInventoryItem
+import com.muhammad.myapplication.forvia.presentation.app_list.event.InventoryListEvent
 import com.muhammad.myapplication.forvia.presentation.custom_components.Loader
 import com.muhammad.myapplication.ui.theme.TechChallengeAppTheme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 
 /**
@@ -37,10 +43,24 @@ import com.muhammad.myapplication.ui.theme.TechChallengeAppTheme
 fun AppInventoryScreen(
     modifier: Modifier = Modifier,
     state: AppListState,
+    events: Flow<InventoryListEvent>,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onInventoryClick: (AppInventory) -> Unit
 ) {
+
+    val context = LocalContext.current
+    ObserveAsEvents(events = events) { event ->
+        when(event) {
+            is InventoryListEvent.Error -> {
+                Toast.makeText(
+                    context,
+                    event.error,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -49,6 +69,7 @@ fun AppInventoryScreen(
         },
         modifier = modifier
     ) { paddingValues ->
+
         Box(
             Modifier
                 .fillMaxSize()
@@ -81,6 +102,7 @@ private fun AppInventoryScreenPreview() {
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this,
                     onInventoryClick = {},
+                    events = flow {  },
                     state = AppListState(appInventory = (1..50).map {
                         previewApp.copy(id = it.toString())
                     })

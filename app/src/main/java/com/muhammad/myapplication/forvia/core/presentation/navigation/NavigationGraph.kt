@@ -28,9 +28,11 @@ fun MyNavigationHost(
             composable<Home> {
                 val viewModel = hiltViewModel<AppInventoryViewModel>()
                 val state = viewModel.state.collectAsStateWithLifecycle().value
+                val event = viewModel.events
 
                 AppInventoryScreen(
                     state = state,
+                    events = event,
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this
                 ) {

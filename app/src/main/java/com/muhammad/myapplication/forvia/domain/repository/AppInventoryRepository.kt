@@ -13,5 +13,8 @@ import kotlinx.coroutines.flow.Flow
  * This allows for flexibility and easier testing.
  * */
 interface AppInventoryRepository {
-     fun  getInventoryList(): Flow<ResultWrapper<List<AppInventory>>>
+   suspend  fun  getInventoryList(): Flow<ResultWrapper<List<AppInventory>>>
+   /** flow because we have cache local database, emits multiple values over period of time thats exactly we want that.
+      before loading the data from local or remote we emit loading loading , success and faiure
+   **/
 }

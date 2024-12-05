@@ -2,6 +2,7 @@ package com.muhammad.myapplication.forvia.data.di
 
 import com.muhammad.myapplication.forvia.data.local.AppInventoryDao
 import com.muhammad.myapplication.forvia.data.local.AppInventoryDatabase
+import com.muhammad.myapplication.forvia.data.local.AppInventoryLDS
 import com.muhammad.myapplication.forvia.data.remote.AppInventoryRDS
 import com.muhammad.myapplication.forvia.data.remote.service.AppInventoryService
 import com.muhammad.myapplication.forvia.data.repository.AppInventoryRepositoryImpl
@@ -30,8 +31,14 @@ object DataModule {
     }
 
     @Provides
-    fun provideExploreRepository(appInventoryRDS: AppInventoryRDS ): AppInventoryRepository =
-        AppInventoryRepositoryImpl(appInventoryRDS = appInventoryRDS )
+    fun provideExploreRepository(
+        appInventoryRDS: AppInventoryRDS,
+        appInventoryLDS: AppInventoryLDS
+    ): AppInventoryRepository =
+        AppInventoryRepositoryImpl(
+            appInventoryRDS = appInventoryRDS,
+            appInventoryLDS = appInventoryLDS
+        )
 
     @Provides
     fun provideAppDao(appDatabase: AppInventoryDatabase): AppInventoryDao =
