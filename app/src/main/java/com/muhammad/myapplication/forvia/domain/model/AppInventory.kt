@@ -19,6 +19,6 @@ data class AppInventory(
     val size : Long,
     val updated :String,
     val storeName : String,
-    val graphic :String?,
+//    val graphic :String?,
     val versionName : String,
 )

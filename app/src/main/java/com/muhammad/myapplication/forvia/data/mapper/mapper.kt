@@ -21,7 +21,7 @@ fun AppInventoryDto.toDomainModel(): AppInventory {
         size = this.size,
         updated = this.updated,
         storeName = this.storeName,
-        graphic = this.graphic ?: "",
+//        graphic = this.graphic ?: "",
         versionName = this.versionName
     )
 }

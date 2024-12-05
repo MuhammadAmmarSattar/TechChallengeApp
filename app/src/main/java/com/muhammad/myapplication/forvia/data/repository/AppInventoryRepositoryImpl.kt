@@ -23,7 +23,7 @@ class AppInventoryRepositoryImpl @Inject constructor(
     private val appInventoryRDS: AppInventoryRDS
 ) : AppInventoryRepository {
 
-    override suspend fun getApp(): Flow<ResultWrapper<List<AppInventory>>> = flow {
+    override  fun getInventoryList(): Flow<ResultWrapper<List<AppInventory>>> = flow {
         try {
             when (val remoteResult = appInventoryRDS.getAppInventory()) {
                 is ResultWrapper.GenericError -> {

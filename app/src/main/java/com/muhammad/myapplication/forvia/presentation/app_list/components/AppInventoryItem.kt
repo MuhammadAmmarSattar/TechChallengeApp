@@ -134,7 +134,7 @@ fun ForivaItemPreview() {
                     size = 1234,
                     updated = "12-01-2024",
                     storeName = "X",
-                    graphic = "https://example.com/graphic.png",
+//                    graphic = "https://example.com/graphic.png",
                     versionName = "1.6v",
                 ),
                 sharedTransitionScope = this@SharedTransitionLayout,

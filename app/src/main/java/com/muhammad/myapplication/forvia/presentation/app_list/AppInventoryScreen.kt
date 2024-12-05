@@ -90,7 +90,7 @@ val previewApp = AppInventory(
     size = 10240000,
     updated = "2024-12-03",
     storeName = "Example Store",
-    graphic = "https://example.com/graphic.png",
+//    graphic = "https://example.com/graphic.png",
     versionName = "1.0.0"
 )
 

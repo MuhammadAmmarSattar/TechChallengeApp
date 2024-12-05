@@ -13,5 +13,5 @@ import kotlinx.coroutines.flow.Flow
  * This allows for flexibility and easier testing.
  * */
 interface AppInventoryRepository {
-    suspend fun  getApp(): Flow<ResultWrapper<List<AppInventory>>>
+     fun  getInventoryList(): Flow<ResultWrapper<List<AppInventory>>>
 }
