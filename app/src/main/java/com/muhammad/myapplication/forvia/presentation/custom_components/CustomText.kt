@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 
@@ -21,12 +22,14 @@ import androidx.compose.ui.unit.sp
     lineHeight : Int = 20,
     fontWeight: FontWeight = FontWeight.Bold,
     maxLines : Int = 1,
+    textAlign: TextAlign = TextAlign.Start,
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     overflow: TextOverflow = TextOverflow.Ellipsis
     ) {
         Text(
             modifier = modifier,
             text = text,
+            textAlign = textAlign,
             maxLines = maxLines,
             overflow = overflow,
             style = textStyle.copy(

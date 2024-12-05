@@ -5,4 +5,5 @@
     <string name="rating">Rating</string>
     <string name="app_inventory_info">App Inventory Info</string>
     <string name="detail">Detail</string>
+    <string name="download_functionality_is_not_available_in_demo_mode">Download functionality is not available\nin demo mode.</string>
 </resources>
