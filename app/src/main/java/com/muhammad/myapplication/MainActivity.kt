@@ -7,21 +7,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.muhammad.myapplication.forvia.core.presentation.navigation.MyNavigationHost
 import com.muhammad.myapplication.ui.theme.TechChallengeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import vtsen.hashnode.dev.workmanagerdemo.ui.permission.PermissionNotification
+import vtsen.hashnode.dev.workmanagerdemo.ui.permission.RuntimePermissionsDialog
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             TechChallengeAppTheme {
+                PermissionNotification()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MyNavigationHost(modifier = Modifier.padding(innerPadding))
                 }
@@ -30,18 +31,4 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TechChallengeAppTheme {
-        Greeting("Android")
-    }
-}

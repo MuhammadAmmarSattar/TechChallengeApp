@@ -1,4 +1,4 @@
-package com.muhammad.myapplication.forvia.core.extensions
+package com.muhammad.myapplication.forvia.core.presentation.extensions
 
 fun Long.toFormattedSize(): String {
     return when {

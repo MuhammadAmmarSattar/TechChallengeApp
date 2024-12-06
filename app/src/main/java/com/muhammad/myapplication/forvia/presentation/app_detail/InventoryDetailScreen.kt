@@ -46,9 +46,9 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.muhammad.myapplication.R
-import com.muhammad.myapplication.forvia.core.extensions.toDateOnly
-import com.muhammad.myapplication.forvia.core.extensions.toFormattedRating
-import com.muhammad.myapplication.forvia.core.extensions.toFormattedSize
+import com.muhammad.myapplication.forvia.core.presentation.extensions.toDateOnly
+import com.muhammad.myapplication.forvia.core.presentation.extensions.toFormattedRating
+import com.muhammad.myapplication.forvia.core.presentation.extensions.toFormattedSize
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
 import com.muhammad.myapplication.forvia.presentation.app_list.previewApp
 import com.muhammad.myapplication.forvia.presentation.custom_components.CustomText

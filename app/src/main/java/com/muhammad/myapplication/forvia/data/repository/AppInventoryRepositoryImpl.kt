@@ -1,6 +1,6 @@
 package com.muhammad.myapplication.forvia.data.repository
 
-import android.util.Log
+import com.muhammad.myapplication.forvia.core.base.Constant.ERROR_MESSAGE
 import com.muhammad.myapplication.forvia.core.domain.util.ResultWrapper
 import com.muhammad.myapplication.forvia.data.local.AppInventoryLDS
 import com.muhammad.myapplication.forvia.data.mapper.toDomainInventory
@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
-
 
 
 /**
@@ -49,7 +48,6 @@ class AppInventoryRepositoryImpl @Inject constructor(
              */
             emit(ResultWrapper.Loading(true))
             val remoteResult = appInventoryRDS.getAppInventory()
-            Log.d("TAG", "getInventoryList: $remoteResult")
             if (remoteResult is ResultWrapper.Success) {
                 appInventoryLDS.insertAll(remoteResult.value.toEntityList())
                 val localResult = appInventoryLDS.getAllInventoryApp().map { it.toDomainInventory() }
@@ -59,7 +57,7 @@ class AppInventoryRepositoryImpl @Inject constructor(
                 if(localResult.isNotEmpty()){
                     emit(ResultWrapper.Success(localResult))
                 }else {
-                    emit(ResultWrapper.GenericError("Internet connection is required for the first-time setup. Please check your connection and try again."))
+                    emit(ResultWrapper.GenericError(ERROR_MESSAGE))
                 }
             }
             /**

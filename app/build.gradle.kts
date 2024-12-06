@@ -66,6 +66,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.androidx.hilt.common)
     kapt(libs.room.compiler)
 
     implementation(libs.hilt.android)
@@ -75,6 +76,9 @@ dependencies {
 
     implementation(libs.glide)
     implementation(libs.glide.compose)
+    implementation (libs.worker.manager)
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
 
     testImplementation(libs.junit)
@@ -84,5 +88,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 
 }

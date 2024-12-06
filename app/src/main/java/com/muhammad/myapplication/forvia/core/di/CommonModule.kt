@@ -2,6 +2,7 @@ package com.muhammad.myapplication.forvia.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.muhammad.myapplication.forvia.core.base.Constant.BASE_URL
 import com.muhammad.myapplication.forvia.data.local.AppInventoryDatabase
 import dagger.Module
 import dagger.Provides
@@ -25,7 +26,7 @@ object CommonModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://ws2.aptoide.com/api/6/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
