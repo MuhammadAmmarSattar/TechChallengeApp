@@ -2,15 +2,10 @@ package com.muhammad.myapplication.forvia.presentation.app_list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.muhammad.myapplication.forvia.core.domain.util.ResultWrapper
 import com.muhammad.myapplication.forvia.domain.repository.AppInventoryRepository
+import com.muhammad.myapplication.forvia.domain.use_case.AppInventoryUseCase
 import com.muhammad.myapplication.forvia.domain.use_case.ScheduleNotificationUseCase
-import com.muhammad.myapplication.forvia.domain.worker.NotificationWorker
 import com.muhammad.myapplication.forvia.presentation.app_list.state.AppListState
 import com.muhammad.myapplication.forvia.presentation.app_list.event.InventoryListEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,14 +16,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
 // inject the dependency of appRepository with the help of constructor injection.
 @HiltViewModel
 class AppInventoryViewModel @Inject constructor(
-    private val appRepository: AppInventoryRepository,
+    private val appInventoryUseCase : AppInventoryUseCase,
     private val scheduleNotificationUseCase: ScheduleNotificationUseCase
 ) : ViewModel() {
 
@@ -59,7 +53,7 @@ class AppInventoryViewModel @Inject constructor(
     private fun appDataListing() {
         //Collects each emitted value from the flow.
         viewModelScope.launch {
-            appRepository.getInventoryList().onEach {
+            appInventoryUseCase.invoke().onEach {
                 when (it) {
                     is ResultWrapper.Loading -> _state.value = AppListState(isLoading = true)
                     is ResultWrapper.GenericError -> {

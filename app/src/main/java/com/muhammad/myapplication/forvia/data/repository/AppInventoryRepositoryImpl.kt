@@ -1,6 +1,7 @@
 package com.muhammad.myapplication.forvia.data.repository
 
 import com.muhammad.myapplication.forvia.core.base.Constant.ERROR_MESSAGE
+import com.muhammad.myapplication.forvia.core.base.Constant.NO_DATA_AVAIABLE
 import com.muhammad.myapplication.forvia.core.domain.util.ResultWrapper
 import com.muhammad.myapplication.forvia.data.local.AppInventoryLDS
 import com.muhammad.myapplication.forvia.data.mapper.toDomainInventory
@@ -49,9 +50,13 @@ class AppInventoryRepositoryImpl @Inject constructor(
             emit(ResultWrapper.Loading(true))
             val remoteResult = appInventoryRDS.getAppInventory()
             if (remoteResult is ResultWrapper.Success) {
-                appInventoryLDS.insertAll(remoteResult.value.toEntityList())
-                val localResult = appInventoryLDS.getAllInventoryApp().map { it.toDomainInventory() }
-                emit(ResultWrapper.Success(localResult))
+                    appInventoryLDS.insertAll(remoteResult.value)
+                    val localResult = appInventoryLDS.getAllInventoryApp().map { it.toDomainInventory() }
+                if(remoteResult.value.isNotEmpty()){
+                    emit(ResultWrapper.Success(localResult))
+                }else {
+                    emit(ResultWrapper.GenericError(NO_DATA_AVAIABLE))
+                }
             }else {
                 val localResult = appInventoryLDS.getAllInventoryApp().map { it.toDomainInventory() }
                 if(localResult.isNotEmpty()){

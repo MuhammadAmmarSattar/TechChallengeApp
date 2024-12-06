@@ -2,8 +2,11 @@ package com.muhammad.myapplication.forvia.data.remote
 
 import com.muhammad.myapplication.forvia.core.data.util.safeApiCall
 import com.muhammad.myapplication.forvia.core.domain.util.ResultWrapper
+import com.muhammad.myapplication.forvia.data.local.AppInventoryEntity
+import com.muhammad.myapplication.forvia.data.mapper.toEntityList
 import com.muhammad.myapplication.forvia.data.remote.response.AppInventoryResponseDto
 import com.muhammad.myapplication.forvia.data.remote.service.AppInventoryService
+import com.muhammad.myapplication.forvia.domain.model.AppInventory
 import javax.inject.Inject
 
 
@@ -13,7 +16,7 @@ import javax.inject.Inject
  * */
 class AppInventoryRDS @Inject constructor(private val  appService: AppInventoryService) {
 
-    suspend fun getAppInventory(): ResultWrapper<AppInventoryResponseDto> {
-        return safeApiCall{appService.getAppInventory()}
+    suspend fun getAppInventory(): ResultWrapper<List<AppInventoryEntity>> {
+        return safeApiCall{appService.getAppInventory().toEntityList()}
     }
 }

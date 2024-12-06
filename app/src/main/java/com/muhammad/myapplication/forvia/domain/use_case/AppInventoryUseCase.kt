@@ -12,7 +12,7 @@ class AppInventoryUseCase @Inject constructor(
     private val repository: AppInventoryRepository //provide the necessary dependencies via hilt
 ) {
 
-    operator suspend fun invoke(): Flow<ResultWrapper<List<AppInventory>>> {
+     suspend fun invoke(): Flow<ResultWrapper<List<AppInventory>>> {
         return repository.getInventoryList()
     }
 
