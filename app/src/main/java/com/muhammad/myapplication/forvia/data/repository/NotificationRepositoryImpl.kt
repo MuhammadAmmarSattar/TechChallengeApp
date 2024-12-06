@@ -18,7 +18,7 @@ class NotificationRepositoryImpl @Inject constructor(
     override fun schedulePeriodicNotification() {
         /**if we need repeated interval e.g after 15 min 30 min etc so we use PeriodicWorkRequestBuilder */
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
-            15, TimeUnit.MINUTES
+            30, TimeUnit.MINUTES
         ).build()
         workManager.enqueueUniquePeriodicWork(
             "NotificationInventoryWorker",
