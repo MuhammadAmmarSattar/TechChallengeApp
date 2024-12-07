@@ -21,7 +21,7 @@ To run this project, you need the following:
 3. Build the project to download dependencies.
 4. Run the app on an emulator or physical device.
 5. You can get the APK file for immediate testing in the folder latest.
-6. https://drive.google.com/file/d/1wa1oCWoXh2PkAKphjqxvh1QF16RJaLrG/view?usp=sharing You can download APK via this link.
+6. https://drive.google.com/file/d/1z5GOYJ4hXcqBnvv8l5FWu-DhgRRA_h22/view?usp=sharing You can download APK via this link.
   
 # Used Technologies and Design Patterns
 
