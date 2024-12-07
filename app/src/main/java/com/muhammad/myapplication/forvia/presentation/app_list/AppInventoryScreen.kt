@@ -18,9 +18,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.muhammad.myapplication.R
 import com.muhammad.myapplication.forvia.core.presentation.utils.ObserveAsEvents
 import com.muhammad.myapplication.forvia.presentation.app_list.state.AppListState
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
@@ -38,6 +37,10 @@ import kotlinx.coroutines.flow.flow
  * for good user experience!!
  **/
 
+object AppInventoryScreenTestTag {
+    const val ROW_CLICK = "row_click"
+}
+
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AppInventoryScreen(
@@ -51,7 +54,7 @@ fun AppInventoryScreen(
 
     val context = LocalContext.current
     ObserveAsEvents(events = events) { event ->
-        when(event) {
+        when (event) {
             is InventoryListEvent.Error -> {
                 Toast.makeText(
                     context,
@@ -75,7 +78,10 @@ fun AppInventoryScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            LazyColumn {
+            LazyColumn(
+                modifier =
+                Modifier.testTag(AppInventoryScreenTestTag.ROW_CLICK)
+            ) {
                 items(state.appInventory) { inventory ->
                     AppInventoryItem(
                         appInventory = inventory,
@@ -102,7 +108,7 @@ private fun AppInventoryScreenPreview() {
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this,
                     onInventoryClick = {},
-                    events = flow {  },
+                    events = flow { },
                     state = AppListState(appInventory = (1..50).map {
                         previewApp.copy(id = it.toString())
                     })

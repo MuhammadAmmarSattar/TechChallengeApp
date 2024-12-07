@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.muhammad.myapplication.forvia.core.presentation.extensions.toDateOnly
 import com.muhammad.myapplication.forvia.core.presentation.extensions.toFormattedRating
 import com.muhammad.myapplication.forvia.domain.model.AppInventory
 import com.muhammad.myapplication.forvia.presentation.custom_components.CustomText
@@ -61,7 +62,7 @@ fun AppInventoryItem(
             ) {
                 Row {
                     GlideImage(
-                        model =appInventory.imageUrl,
+                        model = appInventory.imageUrl,
                         contentDescription = "profile picture",
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.CenterStart,
@@ -70,7 +71,7 @@ fun AppInventoryItem(
                                 state = rememberSharedContentState(key = "image/${appInventory.id}"),
                                 animatedVisibilityScope = animatedVisibilityScope,
                             )
-                            .size(80.dp,80.dp)
+                            .size(80.dp, 80.dp)
                             .clip(RoundedCornerShape(16.dp)),
                     )
                     Spacer(modifier = Modifier.width(16.dp))
@@ -91,13 +92,13 @@ fun AppInventoryItem(
                             text = buildString {
                                 append(appInventory.storeName)
                                 append(" | ")
-                                append(appInventory.storeName)
+                                append(appInventory.updated.toDateOnly())
                             },
-                            )
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            ) {
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Star,
                                 tint = Color.Red,
@@ -106,9 +107,11 @@ fun AppInventoryItem(
                             )
                             CustomText(
                                 fontSize = 10,
-                                text = appInventory.rating.toFormattedRating(), modifier = Modifier.padding(
+                                text = appInventory.rating.toFormattedRating(),
+                                modifier = Modifier.padding(
                                     start = 8.dp, top = 0.dp, end = 12.dp, bottom = 0.dp
-                                ), textStyle = MaterialTheme.typography.bodySmall
+                                ),
+                                textStyle = MaterialTheme.typography.bodySmall
                             )
                         }
                     }

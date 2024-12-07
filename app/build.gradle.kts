@@ -19,6 +19,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -77,9 +78,9 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.glide.compose)
     implementation (libs.worker.manager)
-    implementation("androidx.hilt:hilt-work:1.0.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
-
+    implementation(libs.worker.hilt)
+    implementation(libs.permission)
+    testImplementation(libs.turbine.testing)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

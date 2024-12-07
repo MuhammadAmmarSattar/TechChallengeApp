@@ -27,11 +27,9 @@ import com.muhammad.myapplication.forvia.presentation.custom_components.CustomTe
 fun DialogBottomSheet(
     onDismiss: () -> Unit,
 
-) {
-
+    ) {
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
-//        containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true
         ),
@@ -39,11 +37,10 @@ fun DialogBottomSheet(
     ) {
         BottomSheetBody()
     }
-
 }
 
 @Composable
-fun BottomSheetBody(){
+fun BottomSheetBody() {
 
     Surface(modifier = Modifier.wrapContentSize()) {
 
@@ -54,16 +51,14 @@ fun BottomSheetBody(){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CustomText(text = stringResource(R.string.download_functionality_is_not_available_in_demo_mode),
+            CustomText(
+                text = stringResource(R.string.download_functionality_is_not_available_in_demo_mode),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 fontSize = 12,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 modifier = Modifier.padding(15.dp)
-                )
+            )
         }
-
-
-        }
-
+    }
 }

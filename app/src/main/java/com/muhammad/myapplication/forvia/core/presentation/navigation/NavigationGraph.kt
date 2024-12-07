@@ -46,7 +46,6 @@ fun MyNavigationHost(
                 )
             ) {
                 val arguments = it.toRoute<Detail>()
-//                val detail =  Detail = it.toRoute()
                 InventoryDetailScreen(
                     appInventory = arguments.appInventory,
                     sharedTransitionScope = this@SharedTransitionLayout,

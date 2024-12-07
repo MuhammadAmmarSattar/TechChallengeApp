@@ -20,7 +20,10 @@ hiltNavigationCompose = "1.2.0"
 glide = "4.16.0"
 glideCompose = "1.0.0-beta01"
 work_version = "2.9.1"
+work_hit_version ="1.0.0"
 hiltCommon = "1.2.0"
+runtime_permission = "0.28.0"
+turbine = "1.2.0"
 
 
 [libraries]
@@ -58,6 +61,12 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideCompose" }
 worker-manager = {group = "androidx.work",name = "work-runtime-ktx",version.ref ="work_version"}
 androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
+worker-hilt = {group = "androidx.hilt",name = "hilt-work",version.ref ="work_hit_version"}
+
+turbine-testing = {group = "app.cash.turbine",name = "turbine",version.ref ="turbine"}
+
+permission = {group = "com.google.accompanist",name = "accompanist-systemuicontroller",version.ref ="runtime_permission"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

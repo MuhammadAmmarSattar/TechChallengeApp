@@ -3,7 +3,6 @@ package com.muhammad.myapplication.forvia.presentation.app_list.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muhammad.myapplication.forvia.core.domain.util.ResultWrapper
-import com.muhammad.myapplication.forvia.domain.repository.AppInventoryRepository
 import com.muhammad.myapplication.forvia.domain.use_case.AppInventoryUseCase
 import com.muhammad.myapplication.forvia.domain.use_case.ScheduleNotificationUseCase
 import com.muhammad.myapplication.forvia.presentation.app_list.state.AppListState
@@ -12,9 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ import javax.inject.Inject
 // inject the dependency of appRepository with the help of constructor injection.
 @HiltViewModel
 class AppInventoryViewModel @Inject constructor(
-    private val appInventoryUseCase : AppInventoryUseCase,
+    private val appInventoryUseCase: AppInventoryUseCase,
     private val scheduleNotificationUseCase: ScheduleNotificationUseCase
 ) : ViewModel() {
 
@@ -50,25 +49,32 @@ class AppInventoryViewModel @Inject constructor(
     }
 
     //Fetches app data and updates the state
-    private fun appDataListing() {
+    fun appDataListing() {
         //Collects each emitted value from the flow.
         viewModelScope.launch {
-            appInventoryUseCase.invoke().onEach {
-                when (it) {
-                    is ResultWrapper.Loading -> _state.value = AppListState(isLoading = true)
-                    is ResultWrapper.GenericError -> {
-                        _events.send(InventoryListEvent.Error(error = it.error))
-                        _state.value = AppListState(isLoading = false)
+            appInventoryUseCase.invoke().collectLatest { result ->
+                when (result) {
+                    is ResultWrapper.Loading -> _state.update { it.copy(isLoading = true) }
+                    is ResultWrapper.Success -> {
+                        _state.update {
+                            it.copy(appInventory = result.value, isLoading = false)
+                        }
                     }
+//                        _state.value =
+//                        AppListState(appInventory = result.value, isLoading = false)
 
-                    is ResultWrapper.Success -> _state.value = AppListState(appInventory = it.value)
+                    is ResultWrapper.GenericError -> {
+                        _events.send(InventoryListEvent.Error(error = result.error))
+                        _state.update { it.copy(isLoading = false) }
+                    }
                 }
             }
-                .launchIn(this) // fl0w will be collected in the viewModelScope but viewmodel is cleared then it will stop the collection.
-            //because avoiding any potential memory leaks or unnecessary work.
         }
+        // fl0w will be collected in the viewModelScope but viewmodel is cleared then it will stop the collection.
+        //because avoiding any potential memory leaks or unnecessary work.
+
     }
-    //
+
     fun scheduleNotifications() {
         scheduleNotificationUseCase.execute()
     }

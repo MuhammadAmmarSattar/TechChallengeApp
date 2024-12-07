@@ -55,6 +55,7 @@ class NotificationWorker @AssistedInject constructor(
             Result.failure()
         }
     }
+
     //The information required when a ListenableWorker runs in the context of a foreground service
     override suspend fun getForegroundInfo(): ForegroundInfo {
         return ForegroundInfo(
