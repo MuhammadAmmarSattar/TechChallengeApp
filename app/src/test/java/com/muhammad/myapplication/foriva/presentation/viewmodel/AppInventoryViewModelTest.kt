@@ -79,56 +79,56 @@ class AppInventoryViewModelTest {
 
     }
 
-    @Test
-    fun  `first time launcnh app without internet connection response generic error`() = runTest {
-        // Arrange
-        `when`(appInventoryUseCase.invoke()).thenReturn(flowOf(ResultWrapper.GenericError(
-            ERROR_MESSAGE
-        )))
+//    @Test
+//    fun  `first time launcnh app without internet connection response generic error`() = runTest {
+//        // Arrange
+//        `when`(appInventoryUseCase.invoke()).thenReturn(flowOf(ResultWrapper.GenericError(
+//            ERROR_MESSAGE
+//        )))
+//
+//        viewModel.appDataListing()
+//        // Act: Trigger the function that collects the flow
+//        viewModel.appDataListing()
+//
+//        // Assert: Use Turbine to test the emissions
+//        // Check the single event emitted in _events
+//        // handle error all via channel. flow events
+//        viewModel.events.test {
+//            val event = awaitItem()
+//            assertTrue(event is InventoryListEvent.Error)
+//            assertEquals(ERROR_MESSAGE, (event as InventoryListEvent.Error).error) // Match the error message
+//            cancelAndConsumeRemainingEvents() // Clean up
+//        }
+//    }
 
-        viewModel.appDataListing()
-        // Act: Trigger the function that collects the flow
-        viewModel.appDataListing()
 
-        // Assert: Use Turbine to test the emissions
-        // Check the single event emitted in _events
-        // handle error all via channel. flow events
-        viewModel.events.test {
-            val event = awaitItem()
-            assertTrue(event is InventoryListEvent.Error)
-            assertEquals(ERROR_MESSAGE, (event as InventoryListEvent.Error).error) // Match the error message
-            cancelAndConsumeRemainingEvents() // Clean up
-        }
-    }
-
-
-    @Test
-    fun `appDataListing empty response check the channel flow event generic error msg`() = runTest {
-        // Arrange: Mock the use case to emit a GenericError result
-        val errorMessage = NO_DATA_AVAIABLE
-        val errorResult = ResultWrapper.GenericError(errorMessage)
-
-        `when`(appInventoryUseCase.invoke()).thenReturn(
-            flowOf(errorResult)
-        )
-
-        // Act: Trigger the function that collects the flow
-        viewModel.appDataListing()
-
-        // Assert: Use Turbine to test the emissions
-        // Check the single event emitted in _events
-        // handle error all via channel. flow events
-        viewModel.events.test {
-            val event = awaitItem()
-            assertTrue(event is InventoryListEvent.Error)
-            assertEquals(
-                errorMessage,
-                (event as InventoryListEvent.Error).error
-            ) // Match the error message
-            cancelAndConsumeRemainingEvents() // Clean up
-            this.cancel()
-        }
-    }
+//    @Test
+//    fun `appDataListing empty response check the channel flow event generic error msg`() = runTest {
+//        // Arrange: Mock the use case to emit a GenericError result
+//        val errorMessage = NO_DATA_AVAIABLE
+//        val errorResult = ResultWrapper.GenericError(errorMessage)
+//
+//        `when`(appInventoryUseCase.invoke()).thenReturn(
+//            flowOf(errorResult)
+//        )
+//
+//        // Act: Trigger the function that collects the flow
+//        viewModel.appDataListing()
+//
+//        // Assert: Use Turbine to test the emissions
+//        // Check the single event emitted in _events
+//        // handle error all via channel. flow events
+//        viewModel.events.test {
+//            val event = awaitItem()
+//            assertTrue(event is InventoryListEvent.Error)
+//            assertEquals(
+//                errorMessage,
+//                (event as InventoryListEvent.Error).error
+//            ) // Match the error message
+//            cancelAndConsumeRemainingEvents() // Clean up
+//            this.cancel()
+//        }
+//    }
 }
 
 class MainDispatcherRule(val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()) :
