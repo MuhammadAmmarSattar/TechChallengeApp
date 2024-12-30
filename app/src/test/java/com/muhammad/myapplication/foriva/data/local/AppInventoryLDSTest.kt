@@ -70,7 +70,7 @@ class AppInventoryLDSTest {
                 versionName = "1.0"
             )
         )
-        // Act
+        // Act..
         appInventoryLDS.insertAll(entitiesToInsert)
         // Assert
         verify(appDao, times(1)).insertAll(entitiesToInsert)
