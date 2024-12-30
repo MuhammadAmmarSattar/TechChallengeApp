@@ -35,7 +35,7 @@ class AppInventoryViewModel @Inject constructor(
      *     whenever configuration changes it shows again same msg.
      *    Unlike StateFlow , it doesn't retain its last value,
      *      making it ideal for one-time events such as error messages,
-     *     navigation actions, or showing Snackbars or Toasts
+     *     navigation actions, or showing Snack bars or Toasts
      *
      *     If the user (UI) observes the StateFlow multiple times or gets updated often,
      *     the same error might be handled more than once. that's why i avoid to handle via stateflow inside AppListState
@@ -70,13 +70,12 @@ class AppInventoryViewModel @Inject constructor(
                 }
             }
         }
-        // fl0w will be collected in the viewModelScope but viewmodel is cleared then it will stop the collection.
-        //because avoiding any potential memory leaks or unnecessary work.
+        // flow will be collected in the viewModelScope but viewmodel is cleared then it will stop the collection.
+        //because avoiding any potential memory leaks or unnecessary work....
 
     }
 
-    fun scheduleNotifications() {
-        scheduleNotificationUseCase.execute()
-    }
+    fun scheduleNotifications() = scheduleNotificationUseCase.execute()
+
 
 }
