@@ -1,4 +1,4 @@
-# Forvia Technical Challenge
+ # Forvia Technical Challenge
 
 ### Overview
 This is a simple Android app that fetches and displays a list of applications from Aptoide's API using Retrofit2 and Coroutines. The app features an "App Details" screen, a simulated download dialog, 30-minute notifications using WorkManager, and offline support with Room for local data caching. Built with MVVM clean architecture , Unit testing Compose, I enjoyed a lot while developing this project and solving challenges. I also implemented the bonus task by integrating notifications and local data caching features.
