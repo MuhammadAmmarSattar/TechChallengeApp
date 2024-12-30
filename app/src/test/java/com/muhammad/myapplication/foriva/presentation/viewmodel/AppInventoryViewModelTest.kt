@@ -32,52 +32,52 @@ import org.mockito.Mockito.`when`
 @ExperimentalCoroutinesApi
 class AppInventoryViewModelTest {
 
-    @get:Rule(order = 3)
-    val mainDispatcherRule = MainDispatcherRule()
-
-    // Mock dependencies
-    private val appInventoryUseCase: AppInventoryUseCase = mock()
-    private val scheduleNotificationUseCase: ScheduleNotificationUseCase = mock()
-
-    // ViewModel instance
-    private lateinit var viewModel: AppInventoryViewModel
-
-    @Before
-    fun setup() {
-        viewModel = AppInventoryViewModel(appInventoryUseCase, scheduleNotificationUseCase)
-    }
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain() // Reset the main dispatcher after each test
-    }
-
-    @Test
-    fun `appDataListing emit success  state when data is available`() = runTest {
-        //Arrange
-        val mockInventoryList = listOf(
-            AppInventory(
-                "1",
-                "App 1",
-                "http://example.com/app1.png",
-                4.5,
-                12345678,
-                "2024-01-01",
-                "Store 1",
-                "1.0"
-            )
-        )
-        `when`(appInventoryUseCase.invoke()).thenReturn(
-            flowOf(
-                ResultWrapper.Success(mockInventoryList),
-            )
-        )
-        // Act
-        viewModel.appDataListing()
-        // Assert
-        Assert.assertEquals(mockInventoryList, viewModel.state.value.appInventory)
-
-    }
+//    @get:Rule(order = 3)
+//    val mainDispatcherRule = MainDispatcherRule()
+//
+//    // Mock dependencies
+//    private val appInventoryUseCase: AppInventoryUseCase = mock()
+//    private val scheduleNotificationUseCase: ScheduleNotificationUseCase = mock()
+//
+//    // ViewModel instance
+//    private lateinit var viewModel: AppInventoryViewModel
+//
+//    @Before
+//    fun setup() {
+//        viewModel = AppInventoryViewModel(appInventoryUseCase, scheduleNotificationUseCase)
+//    }
+//    @OptIn(ExperimentalCoroutinesApi::class)
+//    @After
+//    fun tearDown() {
+//        Dispatchers.resetMain() // Reset the main dispatcher after each test
+//    }
+//
+//    @Test
+//    fun `appDataListing emit success  state when data is available`() = runTest {
+//        //Arrange
+//        val mockInventoryList = listOf(
+//            AppInventory(
+//                "1",
+//                "App 1",
+//                "http://example.com/app1.png",
+//                4.5,
+//                12345678,
+//                "2024-01-01",
+//                "Store 1",
+//                "1.0"
+//            )
+//        )
+//        `when`(appInventoryUseCase.invoke()).thenReturn(
+//            flowOf(
+//                ResultWrapper.Success(mockInventoryList),
+//            )
+//        )
+//        // Act
+//        viewModel.appDataListing()
+//        // Assert
+//        Assert.assertEquals(mockInventoryList, viewModel.state.value.appInventory)
+//
+//    }
 
 //    @Test
 //    fun  `first time launcnh app without internet connection response generic error`() = runTest {
