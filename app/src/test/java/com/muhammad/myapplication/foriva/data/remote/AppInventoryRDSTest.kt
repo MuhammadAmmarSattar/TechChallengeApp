@@ -17,7 +17,7 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -25,6 +25,7 @@ import org.mockito.Mockito.`when`
 import retrofit2.HttpException
 import retrofit2.Response
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @ExperimentalCoroutinesApi
 class AppInventoryRDSTest {
 
@@ -72,7 +73,9 @@ class AppInventoryRDSTest {
     fun `test API failure with generic error`() = runTest {
         // Arrange
         val errorMessage = "Server error"
-        `when`(appService.getAppInventory()).thenThrow(HttpException(Response.error<Any>(500, ResponseBody.create(null, ""))))
+        `when`(appService.getAppInventory()).thenThrow(HttpException(Response.error<Any>(500,
+            "".toResponseBody(null)
+        )))
 
         // Act
         val result = appInventoryRDS.getAppInventory()

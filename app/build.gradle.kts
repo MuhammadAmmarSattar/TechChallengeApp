@@ -43,6 +43,9 @@ android {
     }
     kapt {
         correctErrorTypes = true
+        arguments {
+            arg("dagger.fastInit", "enabled")
+        }
     }
 }
 
