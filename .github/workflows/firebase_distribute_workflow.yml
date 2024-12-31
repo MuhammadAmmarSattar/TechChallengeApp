@@ -2,7 +2,7 @@ name: Firebase Distribution # The name of the GitHub Actions workflow
 
 on:
   push:
-    branches: [ master ] # This workflow runs when there is a push to the "firebase-releases" branch
+    branches: [ master ] # This workflow runs when there is a push to the "master" branch
 
 jobs:
   build-and-deploy:
@@ -29,7 +29,7 @@ jobs:
 
       # Step 4: Validate the Gradle Wrapper to ensure it's safe and correct
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v4
+        uses: gradle/wrapper-validation-action@v1 # Correct version of the wrapper validation action
 
       # Step 5: Grant executable permissions to the Gradle wrapper script
       - name: Grant execute permission for gradlew
@@ -46,5 +46,4 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }} # Firebase app ID, stored securely as a secret
           token: ${{ secrets.FIREBASE_TOKEN }} # Firebase authentication token, stored securely as a secret
           groups: github-test-apks # Firebase distribution group to send the APK to
-          file: app/build/outputs/apk/release/app-release-unsigned.apk # Path to the unsigned release APK to upload
-
+          file: app/build/outputs/apk/release/app-release-unsigned.apk
