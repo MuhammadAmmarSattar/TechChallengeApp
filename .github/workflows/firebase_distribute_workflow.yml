@@ -1,0 +1,50 @@
+name: Firebase Distribution # The name of the GitHub Actions workflow
+
+on:
+  push:
+    branches: [ firebase-releases ] # This workflow runs when there is a push to the "firebase-releases" branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # Specifies the type of machine to run the workflow on (Ubuntu latest version)
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - uses: actions/checkout@v4
+
+      # Step 2: Copy a specific Gradle configuration file (ci-gradle.properties) to the default Gradle directory
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+      # Step 3: Cache Gradle files to speed up future builds
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches # Cache for Gradle dependencies
+            ~/.gradle/wrapper # Cache for the Gradle wrapper
+          key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }} # Unique cache key based on OS, JDK, and Gradle files
+          restore-keys: |
+            ${{ runner.os }}-gradle- # Fallback cache key if the specific key is unavailable
+
+      # Step 4: Validate the Gradle Wrapper to ensure it's safe and correct
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v4
+
+      # Step 5: Grant executable permissions to the Gradle wrapper script
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Step 6: Build a release APK of the Android app with Gradle
+      - name: Generate Debug APK
+        run: ./gradlew assembleRelease --stacktrace # Assembles the release APK and shows detailed errors if any occur
+
+      # Step 7: Upload the generated APK to Firebase App Distribution
+      - name: Upload APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }} # Firebase app ID, stored securely as a secret
+          token: ${{ secrets.FIREBASE_TOKEN }} # Firebase authentication token, stored securely as a secret
+          groups: github-test-apks # Firebase distribution group to send the APK to
+          file: app/build/outputs/apk/release/app-release-unsigned.apk # Path to the unsigned release APK to upload
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "655097143457",
+    "project_id": "techchallengeapp-1022d",
+    "storage_bucket": "techchallengeapp-1022d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655097143457:android:a3445dc3a6b4e57cc2d0e0",
+        "android_client_info": {
+          "package_name": "com.muhammad.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGugmHanq9RUR_0IB0I8PW_K3tFyca0o8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
