@@ -1,42 +1,57 @@
-name: Firebase Distribution
+name: Firebase Distribution # The name of the GitHub Actions workflow
+
 on:
   push:
-    branches: [ master ]
+    branches: [ master ] # This workflow runs when there is a push to the "master" branch
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
+    runs-on: ubuntu-latest # Specifies the type of machine to run the workflow on (Ubuntu latest version)
 
+    steps:
+      # Step 1: Checkout the code from the repository
+      - uses: actions/checkout@v4
+          - name: Setup JDK 17
+              uses: actions/setup-java@v4
+              with:
+                  distribution: 'temurin'
+                  java-version: 17
+                  cache: 'gradle'
+
+
+      # Step 2: Copy a specific Gradle configuration file (ci-gradle.properties) to the default Gradle directory
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      # Cache gradle
+      # Step 3: Cache Gradle files to speed up future builds
       - name: Cache Gradle and wrapper
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            ~/.gradle/caches # Cache for Gradle dependencies
+            ~/.gradle/wrapper # Cache for the Gradle wrapper
+          key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }} # Unique cache key based on OS, JDK, and Gradle files
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle- # Fallback cache key if the specific key is unavailable
 
+      # Step 4: Validate the Gradle Wrapper to ensure it's safe and correct
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v1 # Correct version of the wrapper validation action
 
+      # Step 5: Grant executable permissions to the Gradle wrapper script
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # Step 6: Build a release APK of the Android app with Gradle
       - name: Generate Debug APK
-        run: ./gradlew assembleRelease --stacktrace
+        run: ./gradlew assembleRelease --stacktrace # Assembles the release APK and shows detailed errors if any occur
 
-      # Send APK to Firebase Distributions
+      # Step 7: Upload the generated APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
-          groups: github-test-apks
+          appId: ${{ secrets.FIREBASE_APP_ID }} # Firebase app ID, stored securely as a secret
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          # token: ${{ secrets.FIREBASE_TOKEN }} # Firebase authentication token, stored securely as a secret
+          groups: QA Tester # Firebase distribution group to send the APK to
           file: app/build/outputs/apk/release/app-release-unsigned.apk
