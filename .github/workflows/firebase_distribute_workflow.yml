@@ -2,7 +2,7 @@ name: Firebase Distribution # The name of the GitHub Actions workflow
 
 on:
   push:
-    branches: [ master ] # This workflow runs when there is a push to the "master" branch
+    branches: [ master ] # This worsssskflow runs when there is a push to the "master" branch
 
 jobs:
   build-and-deploy:
@@ -46,7 +46,7 @@ jobs:
 
       # Step 7: Upload the generated APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }} # Firebase app ID, stored securely as a secret
 
