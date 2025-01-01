@@ -2,7 +2,7 @@ name: Firebase Distribution # The name of the GitHub Actions workflow
 
 on:
   push:
-    branches: [ master ] # This workflow runs when there is a push to the "master" branch
+    branches: [ master ] # This worsssskflow runs when there is a push to the "master" branch
 
 jobs:
   build-and-deploy:
