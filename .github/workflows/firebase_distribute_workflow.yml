@@ -2,7 +2,7 @@ name: Firebase Distribution # The name of the GitHub Actions workflow
 
 on:
   push:
-    branches: [ master ] # This worsssskflow runs when there is a push to the "master" branch
+    branches: [ master ] # This workflow runs when there is a push to the "master" branch
 
 jobs:
   build-and-deploy:
@@ -11,15 +11,12 @@ jobs:
     steps:
       # Step 1: Checkout the code from the repository
       - uses: actions/checkout@v4
+
+      # Step 2: Setup Java (Temurin JDK 17)
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
-
-      # Step 2: Copy a specific Gradle configuration file (ci-gradle.properties) to the default Gradle directory
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
       # Step 3: Cache Gradle files to speed up future builds
       - name: Cache Gradle and wrapper
@@ -32,26 +29,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle- # Fallback cache key if the specific key is unavailable
 
-      # Step 4: Validate the Gradle Wrapper to ensure it's safe and correct
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1 # Correct version of the wrapper validation action
+      # Step 4: Assemble the APK to ensure it's built
+      - name: Assemble Debug APK
+        run: ./gradlew assembleDebug --stacktrace # Assembles the debug APK
 
-      # Step 5: Grant executable permissions to the Gradle wrapper script
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      # Step 5: Check if APK exists
+      - name: Check if APK exists
+        run: ls -la app/build/outputs/apk/debug/  # Lists the APK file to confirm it's generated
 
-      # Step 6: Build a release APK of the Android app with Gradle
-      - name: Generate Debug APK
-        run: ./gradlew assembleRelease --stacktrace # Assembles the release APK and shows detailed errors if any occur
-
-      # Step 7: Upload the generated APK to Firebase App Distribution
+      # Step 6: Upload APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }} # Firebase app ID, stored securely as a secret
-
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          # token: ${{ secrets.FIREBASE_TOKEN }} # Firebase authentication token, stored securely as a secret
-
-          groups: QA Tester # Firebase distribution group to send the APK to
-          file: app/build/outputs/apk/debug/app-debug.apk
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_CREDENTIALS }} # Firebase service credentials
+          groups: "QA Tester" # Firebase distribution group
+          file: "app/build/outputs/apk/debug/app-debug.apk" # Path to the generated debug APK
+          debug: false
